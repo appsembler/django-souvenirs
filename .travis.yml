@@ -1,0 +1,26 @@
+language: python
+
+python:
+  - "2.7"
+  - "3.5"
+  - "3.6"
+
+install:
+  # install tox-travis explicitly after tox to avoid
+  # pkg_resources.VersionConflict, see
+  # https://travis-ci.org/scampersand/bienvenue/jobs/196462565
+  # https://github.com/ryanhiebert/tox-travis/issues/26
+  - pip install tox
+  - pip install tox-travis
+  - pip install codecov
+
+global:
+  - COVERAGE_CMD="coverage run --append --source souvenirs,tests -m"
+  - COVERAGE_DEP=coverage
+
+script:
+  - tox
+
+after_success:
+  - codecov
+
