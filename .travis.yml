@@ -5,6 +5,11 @@ python:
   - "3.5"
   - "3.6"
 
+env:
+  global:
+    - COVERAGE_CMD="coverage run --append --source souvenirs -m"
+    - COVERAGE_DEP=coverage
+
 install:
   # install tox-travis explicitly after tox to avoid
   # pkg_resources.VersionConflict, see
@@ -14,13 +19,8 @@ install:
   - pip install tox-travis
   - pip install codecov
 
-global:
-  - COVERAGE_CMD="coverage run --append --source souvenirs,tests -m"
-  - COVERAGE_DEP=coverage
-
 script:
   - tox
 
-after_success:
+after_script:
   - codecov
-
