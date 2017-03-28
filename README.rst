@@ -6,6 +6,8 @@ Django Souvenirs
 
 Souvenirs is a Django app for efficiently tracking user activity.
 
+|Souvenirs Album Cover|
+
 Installation
 ------------
 
@@ -58,3 +60,6 @@ Released under the `MIT license <https://github.com/appsembler/django-souvenirs/
 
 .. |PyPI| image:: https://img.shields.io/pypi/v/django-souvenirs.svg?style=plastic
    :target: PyPI_
+
+.. |Souvenirs Album Cover| image:: https://images-na.ssl-images-amazon.com/images/I/51UhpUAIRaL._SS500.jpg
+   :target: https://www.amazon.com/Souvenirs-Reinhardt-Quintet-St%C3%A9phane-Grappelli/dp/B000VWONGE
