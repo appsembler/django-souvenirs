@@ -48,15 +48,15 @@ class TestSouvenir:
         self.test_total_active_users()
 
     def test_monthly_active_users(self):
-        muas = list(monthly_active_users())
-        assert len(muas) == 85  # months from 2010-02 to 2017-02 inclusive
+        maus = list(monthly_active_users())
+        assert len(maus) == 85  # months from 2010-02 to 2017-02 inclusive
 
         make_when = lambda y, m, **kw: datetime.datetime(
             year=2013, month=2, day=14, hour=12, tzinfo=self.tzinfo).replace(
                 year=y, month=m, **kw)
 
-        non_zero_muas = [mua for mua in muas if mua[2]]
-        assert non_zero_muas == [
+        non_zero_maus = [mau for mau in maus if mau[2]]
+        assert non_zero_maus == [
             (make_when(2010, 2), make_when(2010, 3), 1),
             (make_when(2011, 2), make_when(2011, 3), 1),
             (make_when(2012, 2), make_when(2012, 3), 1),
@@ -74,15 +74,15 @@ class TestSouvenir:
         assert len(list(monthly_active_users(start=when, end=when))) == 0
 
     def test_monthly_active_users_calendar(self):
-        muas = list(monthly_active_users(calendar=True))
-        assert len(muas) == 85  # months from 2010-02 to 2017-02 inclusive
+        maus = list(monthly_active_users(calendar=True))
+        assert len(maus) == 85  # months from 2010-02 to 2017-02 inclusive
 
         make_when = lambda y, m, **kw: datetime.datetime(
             year=2013, month=2, day=1, tzinfo=self.tzinfo).replace(
                 year=y, month=m, **kw)
 
-        non_zero_muas = [mua for mua in muas if mua[2]]
-        assert non_zero_muas == [
+        non_zero_maus = [mau for mau in maus if mau[2]]
+        assert non_zero_maus == [
             (make_when(2010, 2), make_when(2010, 3), 1),
             (make_when(2011, 2), make_when(2011, 3), 1),
             (make_when(2012, 2), make_when(2012, 3), 1),
