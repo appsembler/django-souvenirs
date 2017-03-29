@@ -12,9 +12,9 @@ from .utils import adjust_to_calendar_month, adjust_to_subscription_start, iter_
 logger = logging.getLogger(__name__)
 
 
-def total_active_users(start=None, end=None):
+def count_active_users(start=None, end=None):
     """
-    Return the number active users between start and end datetimes,
+    Return the number of active users between start and end datetimes,
     inclusive and exclusive respectively.
     """
     qs = Souvenir.objects.all()
@@ -78,7 +78,7 @@ def monthly_active_users(start=None, end=None, calendar=False,
         end = timezone.make_aware(end, tzinfo)
 
     for month_start, month_end in iter_months(start, end):
-        yield month_start, month_end, total_active_users(month_start, month_end)
+        yield month_start, month_end, count_active_users(month_start, month_end)
 
 
 def souvenez(user, when=None, ratelimit=True, check_duplicate=False):

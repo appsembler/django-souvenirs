@@ -4,7 +4,7 @@ import datetime
 from django.utils import timezone
 import pytest
 from souvenirs.models import Souvenir
-from souvenirs.control import total_active_users, monthly_active_users, souvenez
+from souvenirs.control import count_active_users, monthly_active_users, souvenez
 from .factories import SouvenirFactory, UserFactory
 
 
@@ -23,24 +23,24 @@ class TestSouvenir:
         ]
 
     def test_total_active_users(self):
-        assert total_active_users() == 8
+        assert count_active_users() == 8
 
         when = datetime.datetime(year=2013, month=1, day=1, tzinfo=self.tzinfo)
-        assert total_active_users(start=when)
-        assert total_active_users(end=when)
+        assert count_active_users(start=when)
+        assert count_active_users(end=when)
 
         # combine start and end.
         when = datetime.datetime(year=2013, month=2, day=1, tzinfo=self.tzinfo)
-        assert total_active_users(start=when, end=when.replace(year=2015)) == 2
-        assert total_active_users(start=when.replace(year=2015), end=when) == 0
+        assert count_active_users(start=when, end=when.replace(year=2015)) == 2
+        assert count_active_users(start=when.replace(year=2015), end=when) == 0
 
         # ensure start inclusive and end exclusive by using a datetime that
         # exactly matches a record.
         when = datetime.datetime(year=2013, month=2, day=14, hour=12, tzinfo=self.tzinfo)
         assert Souvenir.objects.filter(when=when).exists()
-        assert total_active_users(start=when) == 5
-        assert total_active_users(end=when) == 3
-        assert total_active_users(start=when, end=when) == 0
+        assert count_active_users(start=when) == 5
+        assert count_active_users(end=when) == 3
+        assert count_active_users(start=when, end=when) == 0
 
     def test_total_active_users_distinct(self):
         for s in self.souvenirs:
