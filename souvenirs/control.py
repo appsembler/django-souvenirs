@@ -47,12 +47,13 @@ def souvenez(user, when=None, ratelimit=True, check_duplicate=False):
     return 'added'
 
 
-def count_active_users(start=None, end=None):
+def count_active_users(start=None, end=None, qs=None):
     """
     Return the number of active users between start and end datetimes,
     inclusive and exclusive respectively.
     """
-    qs = Souvenir.objects.all()
+    if qs is None:
+        qs = Souvenir.objects.all()
     if start:
         qs = qs.filter(when__gte=start)  # inclusive
     if end:
