@@ -6,7 +6,6 @@ from django.conf import settings
 from django.core.cache import caches
 from django.utils import timezone
 from .models import Souvenir
-from .utils import adjust_to_calendar_month, adjust_to_subscription_start, iter_months
 
 
 logger = logging.getLogger(__name__)
@@ -62,59 +61,3 @@ def count_active_users(start=None, end=None):
     if end:
         qs = qs.filter(when__lt=end)     # exclusive
     return qs.values('user').distinct().count()
-
-
-def monthly_active_users(start=None, end=None, calendar=False,
-                         subscription_start=None):
-    """
-    Generate a sequence of (month_start, month_end, active) tuples
-    where month_start is inclusive and month_end is exclusive.
-
-    start and end default to first and last Souvenir records in DB,
-    respectively.
-
-    calendar and subscription_start provide two ways to adjust start. If
-    calendar is True, then adjust start to first day of the month, midnight
-    local time (according to settings.TIME_ZONE). If subscription_start is
-    provided, adjust start to the prior day and time matching
-    subscription_start.
-
-    For just one month:
-
-        start, end, active = next(monthly_active_users(start))
-
-    """
-    if calendar and subscription_start:
-        raise ValueError("specify either calendar or subscription_start, not both")
-
-    # datetime values retrieved from the database are time zone aware, but
-    # might be adjusted to UTC. Prepare to adjust them to the current time zone
-    # so that the calendar month starts at midnight local time.
-    tzinfo = (subscription_start.tzinfo
-              if subscription_start and subscription_start.tzinfo else
-              timezone.get_current_timezone())
-
-    if start is None:
-        first = Souvenir.objects.order_by('when').first()
-        if first is None:
-            return
-        start = first.when.astimezone(tzinfo)
-    elif not timezone.is_aware(start):
-        start = timezone.make_aware(start, tzinfo)
-
-    if calendar:
-        start = adjust_to_calendar_month(start)
-    elif subscription_start:
-        start = adjust_to_subscription_start(start, subscription_start)
-
-    if end is None:
-        last = Souvenir.objects.order_by('when').last()
-        if last is None:
-            return
-        # end is exclusive, so add a second to include the found record
-        end = last.when.astimezone(tzinfo) + timedelta(seconds=1)
-    elif not timezone.is_aware(end):
-        end = timezone.make_aware(end, tzinfo)
-
-    for month_start, month_end in iter_months(start, end):
-        yield month_start, month_end, count_active_users(month_start, month_end)
