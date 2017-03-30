@@ -23,13 +23,22 @@ Or get the latest commit from GitHub
 
     pip install -e git+git://github.com/appsembler/django-souvenirs.git#egg=souvenirs
 
-Add ``souvenirs`` to your ``INSTALLED_APPS``
+Add to ``settings.INSTALLED_APPS``
 
 .. code-block:: python
 
     INSTALLED_APPS = [
         ...,
         'souvenirs',
+    ]
+
+Add to ``settings.MIDDLEWARE_CLASSES``
+
+.. code-block:: python
+
+    MIDDLEWARE_CLASSES = [
+        ...,
+        'souvenirs.middleware.SouvenirsMiddleware',
     ]
 
 Migrate your database
