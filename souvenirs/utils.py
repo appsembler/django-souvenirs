@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 import calendar
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def adjust_to_calendar_month(dt):
@@ -25,6 +25,18 @@ def adjust_to_subscription_start(dt, ss):
     return new_dt
 
 
+def iter_days(start, end):
+    """
+    Generate a sequence of tuples representing the span of a day
+    (day_start, day_end) where starts are inclusive and ends are exclusive (the
+    end of one day is the same as the start of the next day).
+    """
+    while start < end:
+        next_start = min(start + timedelta(days=1), end)
+        yield start, next_start
+        start = next_start
+
+
 def iter_months(start, end):
     """
     Generate a sequence of tuples representing the span of a month
@@ -36,6 +48,37 @@ def iter_months(start, end):
         next_start = min(next_month(start, preferred_dom), end)
         yield start, next_start
         start = next_start
+
+
+def iter_quarters(start, end):
+    """
+    Generate a sequence of tuples representing the span of a quarter
+    (quarter_start, quarter_end) where starts are inclusive and ends are
+    exclusive (the end of one quarter is the same as the start of the next
+    quarter).
+    """
+    months = iter_months(start, end)
+    for quarter_start, quarter_end in months:
+        for m in range(2):
+            next_month = next(months, None)
+            if next_month:
+                quarter_end = next_month[1]
+        yield quarter_start, quarter_end
+
+
+def iter_years(start, end):
+    """
+    Generate a sequence of tuples representing the span of a year (year_start,
+    year_end) where starts are inclusive and ends are exclusive (the end of one
+    year is the same as the start of the next year).
+    """
+    months = iter_months(start, end)
+    for year_start, year_end in months:
+        for m in range(11):
+            next_month = next(months, None)
+            if next_month:
+                year_end = next_month[1]
+        yield year_start, year_end
 
 
 def next_month(dt, preferred_dom=None, delta=1):
