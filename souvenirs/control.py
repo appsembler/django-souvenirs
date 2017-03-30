@@ -20,9 +20,6 @@ def souvenez(user, when=None, ratelimit=True, check_duplicate=False):
     user_id = getattr(user, 'id', user)
     username = getattr(user, 'username', user)  # just for logging
 
-    if not isinstance(user_id, int):
-        raise TypeError("unexpected value for user: {!r}".format(user))
-
     if when is None:
         when = timezone.now()
 
