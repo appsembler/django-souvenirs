@@ -35,5 +35,5 @@ setup(
     author_email='aron@scampersand.com',
     url="https://github.com/appsembler/django-souvenirs",
     packages=find_packages(),
-    install_requires=[],
+    install_requires=['tabulate'],
 )
