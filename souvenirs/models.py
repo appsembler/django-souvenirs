@@ -3,8 +3,10 @@ from __future__ import absolute_import, unicode_literals
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
+from django.utils.encoding import python_2_unicode_compatible
 
 
+@python_2_unicode_compatible
 class Souvenir(models.Model):
     """
     One instance of seeing an active user
@@ -15,6 +17,5 @@ class Souvenir(models.Model):
     class Meta:
         ordering = ['-when']
 
-    def __repr__(self):
-        return '<{} user={} when={!r}>'.format(
-            self.__class__.__name__, self.user.username, self.when)
+    def __str__(self):
+        return 'user={} when={}'.format(self.user_id, self.when)
