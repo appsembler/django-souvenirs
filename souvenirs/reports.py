@@ -1,8 +1,10 @@
 from __future__ import absolute_import, unicode_literals
 
 import itertools
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils import timezone
+from django.utils.module_loading import import_string
 from .control import count_active_users
 from .utils import (iter_days, iter_quarters, iter_months, iter_years,
                     adjust_to_calendar_month)
@@ -112,7 +114,13 @@ label_calendar_year_month = lambda d: d.strftime('%Y-%m')
 label_calendar_year = lambda d: d.year  # int
 
 
-def usage_for_periods(periods):
+def usage_for_periods(*args, **kwargs):
+    name = getattr(settings, 'SOUVENIRS_USAGE_REPORTS_FUNCTION', None)
+    func = import_string(name) if name else _usage_for_periods
+    return func(*args, **kwargs)
+
+
+def _usage_for_periods(periods):
     """
     Generate a sequence of dictionaries of usage data corresponding to periods,
     each of which should be a tuple of (start, end) datetimes, where start is
