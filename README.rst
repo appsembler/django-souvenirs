@@ -108,11 +108,10 @@ over a period of time. For example, to see activity per calendar month for 2016:
     2016-11 420 360 99
     2016-12 588 540 151
 
-See reports_ for additional reporting functions, especially for starting
+See `reports.py`_ for additional reporting functions, especially for starting
 subscriptions on arbitrary days (instead of calendar months).
 
-.. |reports| replace:: ``souvenirs.reports``
-.. _reports: https://github.com/appsembler/django-souvenirs/blob/master/souvenirs/reports.py
+.. _reports.py: https://github.com/appsembler/django-souvenirs/blob/master/souvenirs/reports.py
 
 Settings
 --------
@@ -130,12 +129,9 @@ default ``'default'``
 default ``'souvenirs.'``
 
 ``SOUVENIRS_USAGE_REPORTS_FUNCTION``: all the reporting functions call a
-low-level function usage_. This can be overridden (probably wrapped) if you'd
-like to use the souvenirs reporting functions to generate richer data, for
-example incorporating some other data per time period.
-
-.. |usage| replace:: ``usage_for_periods``
-.. _usage: https://github.com/appsembler/django-souvenirs/blob/master/souvenirs/reports.py#L117
+low-level function ``usage_for_periods``. This can be overridden (probably
+wrapped) if you'd like to use the souvenirs reporting functions to generate
+richer data, for example incorporating some other data per time period.
 
 Contributing
 ------------
