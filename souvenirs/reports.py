@@ -10,6 +10,9 @@ from .utils import (iter_days, iter_quarters, iter_months, iter_years,
                     adjust_to_calendar_month)
 
 
+izip = getattr(itertools, 'izip', zip)
+
+
 def daily_usage(subscription_start, start=None, end=None):
     # labeling depends on having a month number, so defer to
     # customer_monthly_usage for that.
@@ -34,7 +37,7 @@ def customer_monthly_usage(subscription_start, start=None, end=None):
                           end=end or timezone.now())
 
     for m, usage in enumerate(usage_for_periods(periods), 1):
-        if usage['period']['end'] < start:
+        if usage['period']['end'] <= start:
             continue
         usage.update(
             labels=dict(
@@ -56,7 +59,7 @@ def customer_quarterly_usage(subscription_start, start=None, end=None):
                             end=end or timezone.now())
 
     for q, usage in enumerate(usage_for_periods(periods), 1):
-        if usage['period']['end'] < start:
+        if usage['period']['end'] <= start:
             continue
         usage.update(
             labels=dict(
@@ -77,11 +80,11 @@ def customer_yearly_usage(subscription_start, start=None, end=None):
                          end=end or timezone.now())
 
     for y, usage in enumerate(usage_for_periods(periods), 1):
-        if usage['period']['end'] < start:
+        if usage['period']['end'] <= start:
             continue
         usage.update(
             labels=dict(
-                year=y
+                year=label_year_y(y)
             ),
         )
         yield usage
@@ -108,6 +111,7 @@ quarter_to_quarter = lambda q: (q - 1) % 4 + 1
 label_year_month_m = lambda m: 'Y{:02d} M{:02d}'.format(month_to_year(m), month_to_month(m))
 label_year_quarter_q = lambda q: 'Y{:02d} Q{}'.format(quarter_to_year(q), quarter_to_quarter(q))
 label_year_quarter_m = lambda m: 'Y{:02d} Q{}'.format(month_to_year(m), month_to_quarter(m))
+label_year_y = lambda y: 'Y{:02d}'.format(y)
 label_year_q = lambda q: 'Y{:02d}'.format(quarter_to_year(q))
 label_year_m = lambda m: 'Y{:02d}'.format(month_to_year(m))
 label_calendar_year_month = lambda d: d.strftime('%Y-%m')
@@ -141,10 +145,10 @@ def _usage_for_periods(periods):
         }
 
     """
-    rp, ap, pp = itertools.tee(periods, 3)
+    rp, ap, periods = itertools.tee(periods, 3)
     ir = (registered_users_as_of(end) for start, end in rp)
     ia = (count_active_users(*p) for p in ap)
-    for p, r, active in itertools.izip(pp, ir, ia):
+    for p, r, active in izip(periods, ir, ia):
         start, end = p
         registered, activated = r
         yield dict(
