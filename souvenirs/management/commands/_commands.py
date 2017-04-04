@@ -31,7 +31,7 @@ class ReportCommand(BaseCommand):
         parser.add_argument('--ascending', action='store_true',
                             help="output in date-ascending order (default: descending)")
         parser.add_argument('--datefmt', default='%Y-%m-%d',
-                            help="strftime for date columns (default: %Y-%m-%d)")
+                            help="strftime for date columns (default: %%Y-%%m-%%d)")
 
     def handle(self, *args, **options):
         report = options['report'] or 'monthly'
