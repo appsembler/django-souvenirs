@@ -84,7 +84,7 @@ def customer_yearly_usage(subscription_start, start=None, end=None):
             continue
         usage.update(
             labels=dict(
-                year=y
+                year=label_year_y(y)
             ),
         )
         yield usage
@@ -111,6 +111,7 @@ quarter_to_quarter = lambda q: (q - 1) % 4 + 1
 label_year_month_m = lambda m: 'Y{:02d} M{:02d}'.format(month_to_year(m), month_to_month(m))
 label_year_quarter_q = lambda q: 'Y{:02d} Q{}'.format(quarter_to_year(q), quarter_to_quarter(q))
 label_year_quarter_m = lambda m: 'Y{:02d} Q{}'.format(month_to_year(m), month_to_quarter(m))
+label_year_y = lambda y: 'Y{:02d}'.format(y)
 label_year_q = lambda q: 'Y{:02d}'.format(quarter_to_year(q))
 label_year_m = lambda m: 'Y{:02d}'.format(month_to_year(m))
 label_calendar_year_month = lambda d: d.strftime('%Y-%m')
