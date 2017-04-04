@@ -15,7 +15,7 @@ def read(fname):
 setup(
     name="django-souvenirs",
     version=app.__version__,
-    description='Django app for efficiently tracking usage',
+    description='Django app for efficiently measuring usage',
     long_description=read('README.rst'),
     license='MIT',
     platforms=['OS Independent'],

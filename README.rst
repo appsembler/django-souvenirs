@@ -4,13 +4,12 @@ Django Souvenirs
 
 |PyPI| |Build Status| |Coverage Report|
 
-How active are users on your Django site? Django can tell you
-when users registered (``User.date_joined``) and when they signed in
-(``User.last_login``). But sessions are long-lived so this doesn't really answer
-the question.
+How active are users on your Django site? Django can tell you when users
+registered (``User.date_joined``) and when they signed in (``User.last_login``).
+But sessions are long-lived so this doesn't really answer the question.
 
-Souvenirs is a Django app for efficiently tracking when users are on your site,
-and making that information available through an easy API.
+Souvenirs is a Django app for efficiently measuring user activity over time, and
+making that information available through an API.
 
 |Souvenirs Album Cover|
 
