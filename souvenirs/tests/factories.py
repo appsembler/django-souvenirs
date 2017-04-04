@@ -20,4 +20,8 @@ class SouvenirFactory(DjangoModelFactory):
     class Meta:
         model = Souvenir
 
-    user = factory.SubFactory(UserFactory)
+    user = factory.SubFactory(
+        UserFactory,
+        date_joined=factory.SelfAttribute('..when'),
+        last_login=factory.SelfAttribute('..when'),
+    )
