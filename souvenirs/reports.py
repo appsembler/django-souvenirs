@@ -10,6 +10,9 @@ from .utils import (iter_days, iter_quarters, iter_months, iter_years,
                     adjust_to_calendar_month)
 
 
+izip = getattr(itertools, 'izip', zip)
+
+
 def daily_usage(subscription_start, start=None, end=None):
     # labeling depends on having a month number, so defer to
     # customer_monthly_usage for that.
@@ -141,10 +144,10 @@ def _usage_for_periods(periods):
         }
 
     """
-    rp, ap, pp = itertools.tee(periods, 3)
+    rp, ap, periods = itertools.tee(periods, 3)
     ir = (registered_users_as_of(end) for start, end in rp)
     ia = (count_active_users(*p) for p in ap)
-    for p, r, active in itertools.izip(pp, ir, ia):
+    for p, r, active in izip(periods, ir, ia):
         start, end = p
         registered, activated = r
         yield dict(
