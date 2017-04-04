@@ -37,7 +37,7 @@ def customer_monthly_usage(subscription_start, start=None, end=None):
                           end=end or timezone.now())
 
     for m, usage in enumerate(usage_for_periods(periods), 1):
-        if usage['period']['end'] < start:
+        if usage['period']['end'] <= start:
             continue
         usage.update(
             labels=dict(
@@ -59,7 +59,7 @@ def customer_quarterly_usage(subscription_start, start=None, end=None):
                             end=end or timezone.now())
 
     for q, usage in enumerate(usage_for_periods(periods), 1):
-        if usage['period']['end'] < start:
+        if usage['period']['end'] <= start:
             continue
         usage.update(
             labels=dict(
@@ -80,7 +80,7 @@ def customer_yearly_usage(subscription_start, start=None, end=None):
                          end=end or timezone.now())
 
     for y, usage in enumerate(usage_for_periods(periods), 1):
-        if usage['period']['end'] < start:
+        if usage['period']['end'] <= start:
             continue
         usage.update(
             labels=dict(
