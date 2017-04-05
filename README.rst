@@ -2,7 +2,7 @@
 Django Souvenirs
 ================
 
-|PyPI| |Build Status| |Coverage Report|
+|PyPI| |Build Status| |Coverage Report| |Python Versions| |Django Versions|
 
 How active are users on your Django site? Django can tell you when users
 registered (``User.date_joined``) and when they signed in (``User.last_login``).
@@ -167,6 +167,12 @@ Released under the `MIT license <https://github.com/appsembler/django-souvenirs/
    :target: https://codecov.io/gh/appsembler/django-souvenirs/branch/master
 
 .. |PyPI| image:: https://img.shields.io/pypi/v/django-souvenirs.svg?style=plastic
+   :target: PyPI_
+
+.. |Python Versions| image:: https://img.shields.io/pypi/pyversions/django-souvenirs.svg?style=plastic
+   :target: PyPI_
+
+.. |Django Versions| image:: https://img.shields.io/badge/django-1.8%2C%201.9%2C%201.10-blue.svg?style=plastic
    :target: PyPI_
 
 .. |Souvenirs Album Cover| image:: https://images-na.ssl-images-amazon.com/images/I/51UhpUAIRaL._SS500.jpg
