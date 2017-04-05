@@ -12,7 +12,7 @@ from .factories import SouvenirFactory
 class TestShowUsage:
 
     @pytest.fixture(autouse=True)
-    def setup(self, db):
+    def setup(self, db, mocker):
         self.tzinfo = timezone.get_current_timezone()
         self.subscription_start = datetime(
             year=2010, month=1, day=24, hour=22, tzinfo=self.tzinfo)
@@ -25,6 +25,9 @@ class TestShowUsage:
             SouvenirFactory(when=datetime(year=2015, month=10, day=17,
                                           hour=12, tzinfo=self.tzinfo))
         )
+        mocked_now = mocker.patch('souvenirs.reports.timezone.now')
+        mocked_now.return_value = self.now = datetime(
+            year=2017, month=4, day=4, hour=16, tzinfo=self.tzinfo)
 
     def test_show_usage_daily(self):
         out = StringIO()
