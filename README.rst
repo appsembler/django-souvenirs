@@ -119,7 +119,7 @@ Souvenirs uses hopefully sane defaults for all settings. Here's what you can
 override if you want:
 
 ``SOUVENIRS_RATELIMIT_SECONDS``: how often to record an active user in the DB,
-default ``360``
+default ``3600``
 
 ``SOUVENIRS_CACHE_NAME``: which cache to use for rate-limiting,
 default ``'default'``

@@ -24,7 +24,7 @@ def souvenez(user, when=None, ratelimit=True, check_duplicate=False):
         when = timezone.now()
 
     if ratelimit is True:
-        ratelimit = getattr(settings, 'SOUVENIRS_RATELIMIT_SECONDS', 360)
+        ratelimit = getattr(settings, 'SOUVENIRS_RATELIMIT_SECONDS', 3600)
 
     if ratelimit:
         name = getattr(settings, 'SOUVENIRS_CACHE_NAME', 'default')
