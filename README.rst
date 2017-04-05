@@ -172,7 +172,7 @@ Released under the `MIT license <https://github.com/appsembler/django-souvenirs/
 .. |Python Versions| image:: https://img.shields.io/pypi/pyversions/django-souvenirs.svg?style=plastic
    :target: PyPI_
 
-.. |Django Versions| image:: https://img.shields.io/badge/django-1.8%2C%201.9%2C%201.10-blue.svg?style=plastic
+.. |Django Versions| image:: https://img.shields.io/badge/django-1.8%2C%201.9%2C%201.10-44b78b.svg?style=plastic
    :target: PyPI_
 
 .. |Souvenirs Album Cover| image:: https://images-na.ssl-images-amazon.com/images/I/51UhpUAIRaL._SS500.jpg
