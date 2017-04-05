@@ -33,17 +33,17 @@ def souvenez(user, when=None, ratelimit=True, check_duplicate=False):
         cache = caches[name]
         value = cache.get(key)
         if value and when < value + timedelta(seconds=ratelimit):
-            logger.debug("rate-limited %s (last seen %s)".format(username, value))
+            logger.debug("rate-limited %s (last seen %s)", username, value)
             return 'rate-limited'
         cache.set(key, when)
 
     if check_duplicate:
         if Souvenir.objects.filter(user_id=user_id, when=when).exists():
-            logger.debug("ignoring duplicate souvenir for %s (%s)".format(username, when))
+            logger.debug("ignoring duplicate souvenir for %s (%s)", username, when)
             return 'duplicated'
 
     Souvenir(user_id=user_id, when=when).save()
-    logger.debug("saved souvenir for %s (%s)".format(username, when))
+    logger.debug("saved souvenir for %s (%s)", username, when)
     return 'added'
 
 
